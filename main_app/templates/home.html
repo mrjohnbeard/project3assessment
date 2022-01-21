@@ -8,29 +8,41 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Wacky Widgets</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title>Project 3 Assessment</title>
 </head>
 <body>
+    <h1>Wacky Widgets</h1>
+    {% if widgets.count %}
+    <table class="pure-table pure-table-striped">
+        <thead>
+            <tr> 
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
 
+        {% for widget in widgets %}
+        <tr>
+            <td>{{ widget.description }}</td>
+            <td>{{ widget.quantity}}</td>
+            <td><a href="{% url 'remove_widget' widget.id %}">X</a></td>
+        </tr>
 
-
-
-    <h1 id="WW"> Wacky Widgets </h1>
-
-    
-       {% if widgets|length == 0 %}
-            <h3> No Widgets Exist </h3>
-            <hr>
-        {% else %}
-            <ul>
-                {% for widget in widgets %}
-                <li> {{ widget }} </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-
-
-
-
+        {% endfor %}
+    </table>
+    {% else %}
+    <h3>No Widgets Exist</h3>
+    <hr>
+    {% endif %}
+    <h4>Add Widget</h4>
+    <form class="pure-form" action="{% url 'add_widget' %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">ADD WIDGET</button>
+    </form>
+</body>
+</html> 
 
 
 
